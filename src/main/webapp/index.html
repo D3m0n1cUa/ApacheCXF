@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<meta charset="ISO-8859-1">
+<title>Persons DB</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="view/app.js"></script>
+<style>
+a {
+	cursor: pointer;
+	background-color: lightblue;
+}
+</style>
+</head>
+<body>
+	<div ng-controller="PersonCtrl">
+			<table>
+				<tr>
+					<td width="100">NIF:</td>
+					<td><input type="text" id="nif" ng-model="person.nif" /></td>
+				</tr>
+				<tr>
+					<td width="100">Name:</td>
+					<td><input type="text" id="name" ng-model="person.name" /></td>
+				</tr>
+				<tr>
+					<td width="100">Address:</td>
+					<td><input type="text" id="address" ng-model="person.address" /></td>
+				</tr>
+				<tr>
+					<td width="100">Phone:</td>
+					<td><input type="text" id="phone" ng-model="person.phone" /></td>
+				</tr>
+			</table>
+			<br /> <br /> 
+			<a ng-click="getPerson(person.nif)">Get Person by NIF</a> 
+			<a ng-click="addPerson(person.nif,person.name,person.address,person.phone)">Add Person</a> 
+			<a ng-click="deleteUser(person.nif)">Delete Person</a>
+
+		<br /> <br />
+		<p style="color: green">{{message}}</p>
+		<p style="color: red">{{errorMessage}}</p>
+		
+		<br />
+		<br /> 
+		<a ng-click="getAllPersons()">Get all Persons</a><br /> 
+		<br /> <br />
+		<div ng-repeat="person in persons">
+			{{person.nif}} {{person.name}} {{person.address}} {{person.phone}}
+		</div>
+	</div>
+</body>
+</html>
