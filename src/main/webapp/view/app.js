@@ -2,53 +2,84 @@ var app = angular.module('app',[]);
 
 app.controller('PersonCtrl', ['$scope','PersonService', function ($scope,PersonService) {
     
-    $scope.getPerson = function () {
-        var id = $scope.person.nif;
-        PersonService.getPerson($scope.person.nif)
-          .then(function success(response){
-              $scope.person = response.data;
-              $scope.message='';
-              $scope.errorMessage = '';
-          },
-          function error (response ){
-              $scope.message = '';
-              if (response.status === 404){
-                  $scope.errorMessage = 'User not found!';
-              }
-              else {
-                  $scope.errorMessage = "Error getting user!";
-              }
-          });
+    $scope.getPerson = function (search) {
+    	$scope.hideAllMessages();
+    	if ($scope.searchBy === '1') {
+    		$scope.getPersonByNIF(search);
+    	} else {
+    		$scope.getPersonByName(search);
+    	}
     }
+    
+    $scope.getPersonByNIF = function(nif){
+    	PersonService.getPersonByNIF(nif)
+        .then(function success(response){
+      	  if (response.data.nif != null) {
+	        	$scope.persons.length = 0;
+	            $scope.persons.push(response.data);
+        	} else {
+        		$scope.persons.length = 0;
+        	}
+        },
+        function error (response ){
+            if (response.status === 404){
+          	  $scope.errorMessage('User not found!');
+            }
+            else {
+          	  $scope.errorMessage("Error getting user!");
+            }
+        });
+    }
+    
+    $scope.getPersonByName = function(name){
+    	PersonService.getPersonByName(name)
+        .then(function success(response){
+      	  if (response.data.length > 0) {
+	        	$scope.persons.length = 0;
+	        	$scope.persons = response.data;
+        	} else {
+        		$scope.persons.length = 0;
+        	}
+        },
+        function error (response ){
+            if (response.status === 404){
+          	  $scope.errorMessage('User not found!');
+            }
+            else {
+          	  $scope.errorMessage("Error getting user!");
+            }
+        });
+    }
+    
     
     $scope.addPerson = function () {
         if ($scope.person != null && $scope.person.nif && $scope.person.name) {
             PersonService.addPerson($scope.person.nif, $scope.person.name, $scope.person.address, $scope.person.phone)
               .then (function success(response){
-                  $scope.message = 'Person added!';
-                  $scope.errorMessage = '';
+            	  $scope.getAllPersons();
+            	  $scope.init();
+                  $scope.clearInput();
+                  $scope.successMessage('Person added!');
               },
               function error(response){
-                  $scope.errorMessage = 'Error adding person!';
-                  $scope.message = '';
+                  $scope.errorMessage('Error adding person!');
             });
         }
         else {
-            $scope.errorMessage = 'Please enter nif or/and name!';
-            $scope.message = '';
+        	$scope.errorMessage('Please enter nif or/and name!');
         }
     }
     
-    $scope.deletePerson = function () {
-        PersonService.deleteUser($scope.person.nif)
+    $scope.deletePerson = function (nif) {
+        PersonService.deletePerson(nif)
           .then (function success(response){
-              $scope.message = 'Person deleted!';
-              $scope.person = null;
-              $scope.errorMessage='';
+        	  $scope.getAllPersons();
+        	  $scope.init();
+              $scope.clearInput();
+              $scope.successMessage('Person deleted!');
           },
           function error(response){
-              $scope.errorMessage = 'Error deleting person!';
-              $scope.message='';
+        	  $scope.errorMessage('Error deleting person!');
           })
     }
     
@@ -56,23 +87,68 @@ app.controller('PersonCtrl', ['$scope','PersonService', function ($scope,PersonS
         PersonService.getAllPersons()
           .then(function success(response){
               $scope.persons = response.data;
-              $scope.message='';
-              $scope.errorMessage = '';
           },
           function error (response ){
-              $scope.message='';
-              $scope.errorMessage = 'Error getting persons!';
+        	  $scope.errorMessage('Error getting persons!');
           });
+    }
+    
+    $scope.reset = function () {
+    	$scope.getAllPersons();
+    	$scope.init();
+    	$scope.clearInput();
+    }
+    
+    $scope.init = function () {
+    	$scope.showSuccess = false;
+    	$scope.message = '';
+    	$scope.showError = false;
+    	$scope.errorMessage = '';	
+    }
+    
+    
+    $scope.clearInput = function() {
+    	$scope.searchRequest = null;
+    	$scope.person = null;
+    	$scope.searchBy = null;
+    }
+    
+    $scope.hideAllMessages = function() {
+    	$scope.message = '';
+        $scope.showSuccess = false;
+        $scope.errorMessage = '';
+        $scope.errorMessage = false;
+    }
+    
+    $scope.successMessage = function(message) {
+    	$scope.message = message;
+        $scope.showSuccess = true;
+        $scope.errorMessage = '';
+        $scope.errorMessage = false;
+    }
+    
+    $scope.errorMessage = function(message) {
+    	$scope.errorMessage = message;
+        $scope.errorMessage = true;
+        $scope.message = '';
+        $scope.showSuccess = false;
     }
 
 }]);
 
 app.service('PersonService',['$http', function ($http) {
   
-    this.getPerson = function getPerson(personNif){
+    this.getPersonByNIF = function getPersonByNIF(nif){
         return $http({
           method: 'GET',
-          url: 'services/person/get/'+personNif
+          url: 'services/person/get/nif/'+nif
+        });
+  }
+    
+    this.getPersonByName = function getPersonByName(name){
+        return $http({
+          method: 'GET',
+          url: 'services/person/get/name/'+name
         });
   }
   

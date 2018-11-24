@@ -2,6 +2,7 @@ package com.sergii.galkin.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.sergii.galkin.model.Person;
 import com.sergii.galkin.repository.PersonRepository;
@@ -12,6 +13,18 @@ public class PersonDAOImpl implements PersonDAO {
     public Person getPersonByNIF(String nif) {
 	PersonRepository repository = PersonRepository.getPersonRepository();
 	return repository.getDataBase().get(nif);
+    }
+
+    @Override
+    public List<Person> getPersonByName(String name) {
+	PersonRepository repository = PersonRepository.getPersonRepository();
+	List<Person> persons = new ArrayList();
+	for (Map.Entry<String, Person> person : repository.getDataBase().entrySet()) {
+	    if (name.equals(person.getValue().getName())) {
+		persons.add(person.getValue());
+	    }
+	}
+	return persons;
     }
 
     @Override

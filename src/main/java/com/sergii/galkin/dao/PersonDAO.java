@@ -8,6 +8,8 @@ public interface PersonDAO {
 
     public Person getPersonByNIF(String nif);
 
+    public List<Person> getPersonByName(String name);
+
     public List<Person> getAllPersons();
 
     public boolean deletePerson(String nif);

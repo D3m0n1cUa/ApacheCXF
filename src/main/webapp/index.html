@@ -3,6 +3,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Persons DB</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 <script src="view/app.js"></script>
@@ -11,44 +12,78 @@ a {
 	cursor: pointer;
 	background-color: lightblue;
 }
+
+button.for-table {
+	width: 100%;
+}
+
 </style>
 </head>
 <body>
-	<div ng-controller="PersonCtrl">
-			<table>
-				<tr>
-					<td width="100">NIF:</td>
-					<td><input type="text" id="nif" ng-model="person.nif" /></td>
-				</tr>
-				<tr>
-					<td width="100">Name:</td>
-					<td><input type="text" id="name" ng-model="person.name" /></td>
-				</tr>
-				<tr>
-					<td width="100">Address:</td>
-					<td><input type="text" id="address" ng-model="person.address" /></td>
-				</tr>
-				<tr>
-					<td width="100">Phone:</td>
-					<td><input type="text" id="phone" ng-model="person.phone" /></td>
-				</tr>
-			</table>
-			<br /> <br /> 
-			<a ng-click="getPerson(person.nif)">Get Person by NIF</a> 
-			<a ng-click="addPerson(person.nif,person.name,person.address,person.phone)">Add Person</a> 
-			<a ng-click="deleteUser(person.nif)">Delete Person</a>
-
-		<br /> <br />
-		<p style="color: green">{{message}}</p>
-		<p style="color: red">{{errorMessage}}</p>
-		
-		<br />
-		<br /> 
-		<a ng-click="getAllPersons()">Get all Persons</a><br /> 
-		<br /> <br />
-		<div ng-repeat="person in persons">
-			{{person.nif}} {{person.name}} {{person.address}} {{person.phone}}
+	<div ng-controller="PersonCtrl" data-ng-init="getAllPersons()" style="position:absolute; left:50%; width:960px; margin-left:-480px; padding-top: 50px;">
+			
+			
+	  	<div class="form-row">
+    		<div class="form-group col-md-6">
+		      <input type="text" class="form-control" id="searchRequest" ng-model="searchRequest" placeholder="Find by ...">
+		    </div>
+    		<div class="form-group col-md-2">
+			  <select class="custom-select custom-select-md" id="searchBy" ng-model="searchBy">
+			    <option disabled selected value>Choose...</option>
+			    <option value="1">NIF</option>
+			    <option value="2">Name</option>
+			  </select>
+		    </div>
+		    <div class="form-group col-md-2">
+		     <button class="btn btn-secondary btn-block" ng-click="getPerson(searchRequest)">Search</button>
+		    </div>
+		    <div class="form-group col-md-2">
+		     <button class="btn btn-secondary btn-block" ng-click="reset()">Reset</button>
+		    </div>
+  		</div>
+  		
+  		<div class="alert alert-success" role="alert" ng-if="showSuccess">
+		 	{{message}}
 		</div>
+		<div class="alert alert-danger" role="alert" ng-if="showError">
+		 	{{errorMessage}}
+		</div>
+		
+		<br /> <br />
+		
+		<table ng-table="personTable" class="table">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">NIF</th>
+		      <th scope="col">Name</th>
+		      <th scope="col">Address</th>
+		      <th scope="col">Phone</th>
+		      <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr ng-repeat="p in persons">
+		      <td><p class="text-md-left">{{p.nif}}</p></td>
+		      <td><p class="text-md-left">{{p.name}}</p></td>
+		      <td><p class="text-md-left">{{p.address}}</p></td>
+		      <td><p class="text-md-left">{{p.phone}}</p></td>
+		      <td><button ng-click="deletePerson(p.nif)" class="btn btn-danger btn-block">Delete</button></td>
+		    </tr>
+		    <tr>
+		    	<td><input type="text" class="form-control" id="nif" ng-model="person.nif" /></td>
+		    	<td><input type="text" class="form-control" id="name" ng-model="person.name" /></td>
+		    	<td><input type="text" class="form-control" id="address" ng-model="person.address" /></td>
+		    	<td><input type="text" class="form-control" id="phone" ng-model="person.phone" /></td>
+		    	<td><button ng-click="addPerson(person.nif,person.name,person.address,person.phone)" class="btn btn-primary btn-block">Add Person</button></td>
+		    </tr>
+		   </tbody>
+		</table>
+		
 	</div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 </html>

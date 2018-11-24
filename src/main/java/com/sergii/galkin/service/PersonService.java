@@ -17,12 +17,19 @@ import com.sergii.galkin.model.Person;
 @Path("/person")
 public interface PersonService {
 
-    // http://localhost:8080/ApacheCXF/service/person/get/{nif}
+    // http://localhost:8080/ApacheCXF/service/person/get/nif/{nif}
     @GET
-    @Path("get/{nif}")
+    @Path("get/nif/{nif}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Person getPerson(@PathParam("nif") String nif);
+    public Person getPersonByNIF(@PathParam("nif") String nif);
+
+    // http://localhost:8080/ApacheCXF/service/person/get/name/{name}
+    @GET
+    @Path("get/name/{name}")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Person> getPersonByName(@PathParam("name") String name);
 
     // http://localhost:8080/ApacheCXF/service/person/getall
     @GET

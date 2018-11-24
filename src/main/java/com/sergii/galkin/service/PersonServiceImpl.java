@@ -16,8 +16,13 @@ public class PersonServiceImpl implements PersonService {
     private PersonDAO personDAO = new PersonDAOImpl();
 
     @Override
-    public Person getPerson(String nif) {
+    public Person getPersonByNIF(String nif) {
 	return personDAO.getPersonByNIF(nif);
+    }
+
+    @Override
+    public List<Person> getPersonByName(String name) {
+	return personDAO.getPersonByName(name);
     }
 
     @Override
