@@ -4,16 +4,17 @@ import java.util.List;
 
 import javax.ws.rs.core.Response;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sergii.galkin.dao.PersonDAO;
-import com.sergii.galkin.dao.PersonDAOImpl;
 import com.sergii.galkin.model.Person;
 
 @Service("personService")
 public class PersonServiceImpl implements PersonService {
 
-    private PersonDAO personDAO = new PersonDAOImpl();
+    @Autowired
+    private PersonDAO personDAO;
 
     @Override
     public Person getPersonByNIF(String nif) {

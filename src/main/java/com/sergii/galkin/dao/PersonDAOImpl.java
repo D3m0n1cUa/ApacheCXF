@@ -1,54 +1,69 @@
 package com.sergii.galkin.dao;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sergii.galkin.model.Person;
-import com.sergii.galkin.repository.PersonRepository;
 
+@Repository
 public class PersonDAOImpl implements PersonDAO {
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    public SessionFactory getSessionFactory() {
+	return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+	this.sessionFactory = sessionFactory;
+    }
+
+    @Transactional
     @Override
     public Person getPersonByNIF(String nif) {
-	PersonRepository repository = PersonRepository.getPersonRepository();
-	return repository.getDataBase().get(nif);
+	Person person = (Person) sessionFactory.getCurrentSession().get(Person.class, nif);
+	return person != null ? person : null;
     }
 
+    @Transactional
     @Override
     public List<Person> getPersonByName(String name) {
-	PersonRepository repository = PersonRepository.getPersonRepository();
-	List<Person> persons = new ArrayList();
-	for (Map.Entry<String, Person> person : repository.getDataBase().entrySet()) {
-	    if (name.equals(person.getValue().getName())) {
-		persons.add(person.getValue());
-	    }
-	}
+	Criteria query = sessionFactory.getCurrentSession().createCriteria(Person.class);
+	query.add(Restrictions.like("name", name, MatchMode.ANYWHERE).ignoreCase());
+	List<Person> persons = query.list();
 	return persons;
     }
 
+    @SuppressWarnings("unchecked")
+    @Transactional
     @Override
     public List<Person> getAllPersons() {
-	PersonRepository repository = PersonRepository.getPersonRepository();
-	List<Person> persons = new ArrayList(repository.getDataBase().values());
-	return persons;
+	return sessionFactory.getCurrentSession().createCriteria(Person.class).list();
     }
 
+    @Transactional
     @Override
     public boolean deletePerson(String nif) {
-	PersonRepository repository = PersonRepository.getPersonRepository();
-	if (repository.getDataBase().containsKey(nif)) {
-	    repository.getDataBase().remove(nif);
+	Person person = getPersonByNIF(nif);
+	if (person != null) {
+	    sessionFactory.getCurrentSession().delete(person);
 	    return true;
 	}
-
 	return false;
     }
 
+    @Transactional
     @Override
     public void addPerson(Person person) {
-	PersonRepository repository = PersonRepository.getPersonRepository();
-	repository.getDataBase().put(person.getNif(), person);
+	sessionFactory.getCurrentSession().save(person);
     }
 
 }

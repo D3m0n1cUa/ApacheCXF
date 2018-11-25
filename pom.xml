@@ -13,6 +13,7 @@
 		<jackson.version>1.9.13</jackson.version>
 		<spring.version>4.0.0.RELEASE</spring.version>
 		<apache.httpcomponents.version>4.3.2</apache.httpcomponents.version>
+		<hibernate.version>4.2.2.Final</hibernate.version>
 		<compileSource>1.8</compileSource>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -21,7 +22,7 @@
   
   <dependencies>
   
-  <!-- Apache CXF -->
+  		<!-- Apache CXF -->
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
@@ -91,6 +92,25 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+        
+        <!-- Hibernate Core -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>4.3.11.Final</version>
+        </dependency>
+ 
+        <!-- MySql-Connector -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.31</version>
         </dependency>
     
   </dependencies>
