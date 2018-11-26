@@ -11,7 +11,7 @@
     <context:annotation-config />
  
     <!-- scans and register beans using annotation-config (metadata) -->
-	<context:component-scan base-package="com.sergii.galkin.dao, com.sergii.galkin.service" />
+	<context:component-scan base-package="com.sergii.galkin.dao, com.sergii.galkin.service, com.sergii.galkin.exhandler" />
  
     <!-- turn on spring transaction annotation -->
     <tx:annotation-driven transaction-manager="transactionManager" />

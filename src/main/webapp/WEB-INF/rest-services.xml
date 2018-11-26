@@ -13,7 +13,7 @@
 
 	<!-- to support Java-to-XML and vice-versa conversion -->
 	<bean id="jaxbXmlProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" />
-
+	
 	<!-- CXFServlet configured in web.xml sends requests here -->
 	<jaxrs:server id="restContainer" address="/">
 		<jaxrs:serviceBeans>

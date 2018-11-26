@@ -14,6 +14,6 @@ public interface PersonDAO {
 
     public boolean deletePerson(String nif);
 
-    public void addPerson(Person person);
+    public boolean addPerson(Person person);
 
 }

@@ -1,7 +1,5 @@
 package com.sergii.galkin.service;
 
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,21 +20,21 @@ public interface PersonService {
     @Path("get/nif/{nif}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Person getPersonByNIF(@PathParam("nif") String nif);
+    public Response getPersonByNIF(@PathParam("nif") String nif);
 
     // http://localhost:8080/ApacheCXF/service/person/get/name/{name}
     @GET
     @Path("get/name/{name}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Person> getPersonByName(@PathParam("name") String name);
+    public Response getPersonByName(@PathParam("name") String name);
 
     // http://localhost:8080/ApacheCXF/service/person/getall
     @GET
     @Path("getall")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Person> getAllPersons();
+    public Response getAllPersons();
 
     // http://localhost:8080/ApacheCXF/service/person/add
     @POST

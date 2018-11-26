@@ -1,7 +1,5 @@
 package com.sergii.galkin.service;
 
-import java.util.List;
-
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +15,18 @@ public class PersonServiceImpl implements PersonService {
     private PersonDAO personDAO;
 
     @Override
-    public Person getPersonByNIF(String nif) {
-	return personDAO.getPersonByNIF(nif);
+    public Response getPersonByNIF(String nif) {
+	return Response.ok(personDAO.getPersonByNIF(nif)).build();
     }
 
     @Override
-    public List<Person> getPersonByName(String name) {
-	return personDAO.getPersonByName(name);
+    public Response getPersonByName(String name) {
+	return Response.ok(personDAO.getPersonByName(name)).build();
     }
 
     @Override
-    public List<Person> getAllPersons() {
-	return personDAO.getAllPersons();
+    public Response getAllPersons() {
+	return Response.ok(personDAO.getAllPersons()).build();
     }
 
     @Override
@@ -38,16 +36,15 @@ public class PersonServiceImpl implements PersonService {
 	    return Response.ok().build();
 	}
 
-	return Response.status(Response.Status.NOT_FOUND).build();
+	return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @Override
     public Response addPerson(Person person) {
-	if (person == null) {
-	    return Response.status(Response.Status.BAD_REQUEST).build();
+	boolean added = personDAO.addPerson(person);
+	if (added == false) {
+	    return Response.status(Response.Status.CONFLICT).build();
 	}
-
-	personDAO.addPerson(person);
 
 	return Response.ok().build();
     }

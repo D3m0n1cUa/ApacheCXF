@@ -46,7 +46,7 @@ button.for-table {
 		 	{{message}}
 		</div>
 		<div class="alert alert-danger" role="alert" ng-if="showError">
-		 	{{errorMessage}}
+		 	{{erMessage}}
 		</div>
 		
 		<br /> <br />
@@ -70,10 +70,10 @@ button.for-table {
 		      <td><button ng-click="deletePerson(p.nif)" class="btn btn-danger btn-block">Delete</button></td>
 		    </tr>
 		    <tr>
-		    	<td><input type="text" class="form-control" id="nif" ng-model="person.nif" /></td>
-		    	<td><input type="text" class="form-control" id="name" ng-model="person.name" /></td>
-		    	<td><input type="text" class="form-control" id="address" ng-model="person.address" /></td>
-		    	<td><input type="text" class="form-control" id="phone" ng-model="person.phone" /></td>
+		    	<td><input type="text" class="form-control" id="nif" ng-model="person.nif" placeholder="Ex. 123456789" size="9" maxlength="9"/></td>
+		    	<td><input type="text" class="form-control" id="name" ng-model="person.name" placeholder="Name" maxlength="30"/></td>
+		    	<td><input type="text" class="form-control" id="address" ng-model="person.address" placeholder="Address" maxlength="50"/></td>
+		    	<td><input type="text" class="form-control" id="phone" ng-model="person.phone" placeholder="Phone" size="9" maxlength="15"/></td>
 		    	<td><button ng-click="addPerson(person.nif,person.name,person.address,person.phone)" class="btn btn-primary btn-block">Add Person</button></td>
 		    </tr>
 		   </tbody>

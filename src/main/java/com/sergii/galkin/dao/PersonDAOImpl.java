@@ -6,11 +6,13 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sergii.galkin.model.Person;
+import com.sergii.galkin.validator.PersonValidation;
 
 @Repository
 public class PersonDAOImpl implements PersonDAO {
@@ -62,8 +64,13 @@ public class PersonDAOImpl implements PersonDAO {
 
     @Transactional
     @Override
-    public void addPerson(Person person) {
+    public boolean addPerson(Person person) throws ConstraintViolationException {
+	if (!PersonValidation.validatePerson(person) || getPersonByNIF(person.getNif()) != null) {
+	    return false;
+	}
 	sessionFactory.getCurrentSession().save(person);
+
+	return true;
     }
 
 }

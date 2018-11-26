@@ -6,8 +6,11 @@ app.controller('PersonCtrl', ['$scope','PersonService', function ($scope,PersonS
     	$scope.hideAllMessages();
     	if ($scope.searchBy === '1') {
     		$scope.getPersonByNIF(search);
-    	} else {
+    	} else if ($scope.searchBy === '2') {
     		$scope.getPersonByName(search);
+    	} else {
+    		alert("text");
+    		$scope.unsuccessMessage('Please, choose how to search (By NIF or Name)');
     	}
     }
     
@@ -23,10 +26,10 @@ app.controller('PersonCtrl', ['$scope','PersonService', function ($scope,PersonS
         },
         function error (response ){
             if (response.status === 404){
-          	  $scope.errorMessage('User not found!');
+          	  $scope.unsuccessMessage('User not found!');
             }
             else {
-          	  $scope.errorMessage("Error getting user!");
+          	  $scope.unsuccessMessage("Error getting user!");
             }
         });
     }
@@ -43,17 +46,17 @@ app.controller('PersonCtrl', ['$scope','PersonService', function ($scope,PersonS
         },
         function error (response ){
             if (response.status === 404){
-          	  $scope.errorMessage('User not found!');
+          	  $scope.unsuccessMessage('User not found!');
             }
             else {
-          	  $scope.errorMessage("Error getting user!");
+          	  $scope.unsuccessMessage("Error getting user!");
             }
         });
     }
     
     
     $scope.addPerson = function () {
-        if ($scope.person != null && $scope.person.nif && $scope.person.name) {
+        
             PersonService.addPerson($scope.person.nif, $scope.person.name, $scope.person.address, $scope.person.phone)
               .then (function success(response){
             	  $scope.getAllPersons();
@@ -62,12 +65,11 @@ app.controller('PersonCtrl', ['$scope','PersonService', function ($scope,PersonS
                   $scope.successMessage('Person added!');
               },
               function error(response){
-                  $scope.errorMessage('Error adding person!');
+                  $scope.unsuccessMessage('Error adding person! Please, check entered data!');
             });
-        }
-        else {
-        	$scope.errorMessage('Please enter nif or/and name!');
-        }
+       
+        
+        
     }
     
     $scope.deletePerson = function (nif) {
@@ -79,7 +81,7 @@ app.controller('PersonCtrl', ['$scope','PersonService', function ($scope,PersonS
               $scope.successMessage('Person deleted!');
           },
           function error(response){
-        	  $scope.errorMessage('Error deleting person!');
+        	  $scope.unsuccessMessage('Error deleting person!');
           })
     }
     
@@ -89,7 +91,7 @@ app.controller('PersonCtrl', ['$scope','PersonService', function ($scope,PersonS
               $scope.persons = response.data;
           },
           function error (response ){
-        	  $scope.errorMessage('Error getting persons!');
+        	  $scope.unsuccessMessage('Error getting persons!');
           });
     }
     
@@ -103,7 +105,7 @@ app.controller('PersonCtrl', ['$scope','PersonService', function ($scope,PersonS
     	$scope.showSuccess = false;
     	$scope.message = '';
     	$scope.showError = false;
-    	$scope.errorMessage = '';	
+    	$scope.erMessage = '';	
     }
     
     
@@ -116,20 +118,20 @@ app.controller('PersonCtrl', ['$scope','PersonService', function ($scope,PersonS
     $scope.hideAllMessages = function() {
     	$scope.message = '';
         $scope.showSuccess = false;
-        $scope.errorMessage = '';
-        $scope.errorMessage = false;
+        $scope.erMessage = '';
+        $scope.showError = false;
     }
     
     $scope.successMessage = function(message) {
     	$scope.message = message;
         $scope.showSuccess = true;
-        $scope.errorMessage = '';
-        $scope.errorMessage = false;
+        $scope.erMessage = '';
+        $scope.showError = false;
     }
     
-    $scope.errorMessage = function(message) {
-    	$scope.errorMessage = message;
-        $scope.errorMessage = true;
+    $scope.unsuccessMessage = function(message) {
+    	$scope.erMessage = message;
+        $scope.showError = true;
         $scope.message = '';
         $scope.showSuccess = false;
     }
