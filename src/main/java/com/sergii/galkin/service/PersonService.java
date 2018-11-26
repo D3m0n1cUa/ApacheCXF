@@ -15,7 +15,7 @@ import com.sergii.galkin.model.Person;
 @Path("/person")
 public interface PersonService {
 
-    // http://localhost:8080/ApacheCXF/service/person/get/nif/{nif}
+    // http://localhost:8080/ApacheCXF/services/person/get/nif/{nif}
     @GET
     @Path("get/nif/{nif}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)

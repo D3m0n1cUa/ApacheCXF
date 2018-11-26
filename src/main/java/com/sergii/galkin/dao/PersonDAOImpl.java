@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sergii.galkin.model.Person;
-import com.sergii.galkin.validator.PersonValidation;
+import com.sergii.galkin.validator.Validator;
 
 @Repository
 public class PersonDAOImpl implements PersonDAO {
@@ -65,7 +65,7 @@ public class PersonDAOImpl implements PersonDAO {
     @Transactional
     @Override
     public boolean addPerson(Person person) throws ConstraintViolationException {
-	if (!PersonValidation.validatePerson(person) || getPersonByNIF(person.getNif()) != null) {
+	if (!Validator.validatePerson(person) || getPersonByNIF(person.getNif()) != null) {
 	    return false;
 	}
 	sessionFactory.getCurrentSession().save(person);

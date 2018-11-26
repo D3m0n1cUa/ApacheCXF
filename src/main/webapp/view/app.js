@@ -68,8 +68,7 @@ app.controller('PersonCtrl', ['$scope','PersonService', function ($scope,PersonS
                   $scope.unsuccessMessage('Error adding person! Please, check entered data!');
             });
        
-        
-        
+   
     }
     
     $scope.deletePerson = function (nif) {

@@ -9,11 +9,12 @@
   <url>http://maven.apache.org</url>
   
   	<properties>
-		<cxf.version>3.0.0</cxf.version>
+		<cxf.version>3.1.17</cxf.version>
 		<jackson.version>1.9.13</jackson.version>
-		<spring.version>4.0.0.RELEASE</spring.version>
-		<apache.httpcomponents.version>4.3.2</apache.httpcomponents.version>
-		<hibernate.version>4.2.2.Final</hibernate.version>
+		<spring.version>4.3.20.RELEASE</spring.version>
+		<hibernate.version>4.3.11.Final</hibernate.version>
+		<junit.version>4.12</junit.version>
+		<mysql.version>5.1.40</mysql.version>
 		<compileSource>1.8</compileSource>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -38,6 +39,11 @@
 			<artifactId>cxf-rt-transports-http-jetty</artifactId>
 			<version>${cxf.version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.cxf</groupId>
+		    <artifactId>cxf-rt-rs-client</artifactId>
+		    <version>${cxf.version}</version>
+		</dependency>
 
 		<!-- for JSON support in Apache-CXF Restful web service -->
 		<dependency>
@@ -46,31 +52,7 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
-		<!-- Apache HTTP components for writing test client -->
-		<dependency>
-			<groupId>commons-httpclient</groupId>
-			<artifactId>commons-httpclient</artifactId>
-			<version>3.1</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>${apache.httpcomponents.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpcore</artifactId>
-			<version>${apache.httpcomponents.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpmime</artifactId>
-			<version>${apache.httpcomponents.version}</version>
-			<scope>compile</scope>
-		</dependency>
+		
 
 		<!-- Spring framework -->
 		<dependency>
@@ -94,6 +76,7 @@
             <version>${spring.version}</version>
         </dependency>
         
+        
         <!-- Hibernate Core -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -103,14 +86,22 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-ehcache</artifactId>
-            <version>4.3.11.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
  
         <!-- MySql-Connector -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.31</version>
+            <version>${mysql.version}</version>
+        </dependency>
+        
+        <!-- JUnit -->
+         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
     
   </dependencies>

@@ -75,4 +75,34 @@ public class Person implements Serializable {
 	this.phone = phone;
     }
 
+    @Override
+    public String toString() {
+	return "Person [nif=" + nif + ", name=" + name + ", address=" + address + ", phone=" + phone + "]";
+    }
+
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((nif == null) ? 0 : nif.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	Person other = (Person) obj;
+	if (nif == null) {
+	    if (other.nif != null)
+		return false;
+	} else if (!nif.equals(other.nif))
+	    return false;
+	return true;
+    }
+
 }

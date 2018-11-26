@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.sergii.galkin.dao.PersonDAO;
 import com.sergii.galkin.model.Person;
+import com.sergii.galkin.validator.Validator;
 
 @Service("personService")
 public class PersonServiceImpl implements PersonService {
@@ -16,7 +17,15 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Response getPersonByNIF(String nif) {
-	return Response.ok(personDAO.getPersonByNIF(nif)).build();
+	if (!Validator.validateNIF(nif)) {
+	    return Response.status(Response.Status.BAD_REQUEST).build();
+	}
+	Person person = personDAO.getPersonByNIF(nif);
+	if (person == null) {
+	    return Response.status(Response.Status.NOT_FOUND).build();
+	}
+
+	return Response.ok(person).build();
     }
 
     @Override
