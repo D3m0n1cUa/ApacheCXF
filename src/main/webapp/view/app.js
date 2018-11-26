@@ -9,7 +9,6 @@ app.controller('PersonCtrl', ['$scope','PersonService', function ($scope,PersonS
     	} else if ($scope.searchBy === '2') {
     		$scope.getPersonByName(search);
     	} else {
-    		alert("text");
     		$scope.unsuccessMessage('Please, choose how to search (By NIF or Name)');
     	}
     }
