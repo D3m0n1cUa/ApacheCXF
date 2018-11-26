@@ -1,4 +1,4 @@
-package com.sergii.galkin.service;
+package com.sergii.galkin.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,7 +9,7 @@ import org.junit.Test;
 import com.sergii.galkin.client.ServiceClient;
 import com.sergii.galkin.model.Person;
 
-public class PersonServiceTest {
+public class TestPersonService {
     private static ServiceClient client = new ServiceClient();
 
     @Test
@@ -33,5 +33,4 @@ public class PersonServiceTest {
 	TestResponse result = client.getPersonByNif("284111sdfdf314");
 	assertEquals(responseExpect, result);
     }
-
 }

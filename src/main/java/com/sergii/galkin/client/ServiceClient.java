@@ -14,13 +14,16 @@ import javax.ws.rs.core.Response.Status;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.sergii.galkin.model.Person;
-import com.sergii.galkin.service.TestResponse;
+import com.sergii.galkin.test.TestResponse;
+
+//import com.sergii.galkin.model.Person;
+//import com.sergii.galkin.test.TestResponse;
 
 public class ServiceClient {
 
     private static final int INTERNAL_SERVER_ERROR = 500;
-
     private static String httpRequestGetPersonByNif = "http://localhost:8080/ApacheCXF/services/person/get/nif/";
+
     private static String httpRequestGetPersonByName = "http://localhost:8080/ApacheCXF/services/person/get/name/";
 
     public TestResponse getPersonByNif(String nif) {
@@ -121,5 +124,4 @@ public class ServiceClient {
 
 	return null;
     }
-
 }

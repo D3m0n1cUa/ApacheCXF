@@ -1,4 +1,4 @@
-package com.sergii.galkin.service;
+package com.sergii.galkin.test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,7 +8,6 @@ import javax.ws.rs.core.Response.Status;
 import com.sergii.galkin.model.Person;
 
 public class TestResponse {
-
     private Status status;
     private List<Person> persons;
 
@@ -75,5 +74,4 @@ public class TestResponse {
     public static TestResponse internalError() {
 	return new TestResponse(Status.fromStatusCode(500));
     }
-
 }
